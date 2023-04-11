@@ -1,13 +1,13 @@
 from flask import Flask,request,render_template, redirect, url_for, session
 from datetime import timedelta
 
+
 app = Flask(__name__)
 app.secret_key = "hello"
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 user_email = "ikuhig4585@gmail.com"
 user_pass = "pass"
-
 
 @app.route("/")
 def home():
@@ -19,7 +19,7 @@ def login():
         session.permanent =True      
         user = request.form["email"]
         
-        if user_email == request.form["email"]and user_pass == request.form["password"]:
+        if user_email == request.form["email"] and user_pass == request.form["password"]:
             session["user"]=user
             return redirect(url_for("user"))
         else:
@@ -36,7 +36,7 @@ def user():
         return redirect(url_for("logout"))
     else:
         if "user" in session:
-            return render_template("content.html", user=user_email)
+            return render_template("content.html", user= user_email)
         else:
             return redirect(url_for("login"))
         
