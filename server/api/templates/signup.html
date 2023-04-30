@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Login Page{% endblock %}
 {% block content %}
-<form action="#" method="POST" >
     <h1>新規登録</h1>
-    <p>email:</p>
-    <p><input type="text" name="email" /></p>
-    <p>password:</p>
-    <p><input type="text" name="password" /></p>
-    <p><input type="submit" value="登録" /></p>
-</form>
+    <form action="signin" method="GET" >
+        <p><input type="submit" name ="btn1" value="サインインページ"/></p>
+    </form>
+    <form action="#" method="POST" >
+        <p>email:</p>
+        <p><input type="text" name="email" /></p>
+        <p>password:</p>
+        <p><input type="text" name="password" /></p>
+        <p><input type="submit" value="登録" /></p>
+    </form>
 {% endblock %}

@@ -35,12 +35,19 @@ def verify_password(hashed_password:str, password:str):
 
 @app.route("/")
 def home():
+    if "user" in session:
+        return redirect(url_for("user"))
     return redirect(url_for("signin"))
 
 @app.route('/signup',methods=['POST', 'GET'])
 def signup():
+    if "user" in session:
+        return redirect(url_for("user"))
     if request.method == "POST": 
-        session.permanent =True
+        email = request.form["email"]
+        password = request.form["password"]
+        if email == "" or password == "":
+            return redirect(url_for("signup"))
         user = User()
         user.email = request.form["email"]
         user.password = hashing_password(request.form["password"])
@@ -58,12 +65,15 @@ def signup():
     return render_template("signup.html")
 
 @app.route('/signin',methods=['POST', 'GET'])
-def signin():  
+def signin():
+        if "user" in session:
+            user = session["user"]
+            return redirect(url_for("user"))
         if request.method == "POST":
             session.permanent =True      
             email = request.form["email"]
             password = request.form["password"]
-            if email == "" and password == "":
+            if email == "" or password == "":
                 return redirect(url_for("signin"))
             users = db.session.query(User).filter(User.email == email).limit(1).all()
             for user in users:
