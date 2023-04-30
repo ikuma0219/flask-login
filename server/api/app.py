@@ -16,22 +16,21 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{user}:{password}@{host
 app.config['SQLALCHEMY_TRACK_MODIFICAIONS'] = False
 app.secret_key = "hello"
 app.permanent_session_lifetime = timedelta(minutes=5)
-db.init_app(app)
 
+db.init_app(app)
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False)
-
 with app.app_context():
     db.create_all()
-   
-def hashing_password(password:str):
-    return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-def verify_password(hashed_password:str, password:str):
-    return hashed_password == hashlib.sha256(password.encode('utf-8')).hexdigest()
+class Hash_pass():
+    def hashing_password(password:str):
+        return hashlib.sha256(password.encode('utf-8')).hexdigest()
+    def verify_password(hashed_password:str, password:str):
+        return hashed_password == hashlib.sha256(password.encode('utf-8')).hexdigest()
 
 @app.route("/")
 def home():
@@ -47,10 +46,11 @@ def signup():
         email = request.form["email"]
         password = request.form["password"]
         if email == "" or password == "":
+            flash("入力してください．")
             return redirect(url_for("signup"))
         user = User()
         user.email = request.form["email"]
-        user.password = hashing_password(request.form["password"])
+        user.password = Hash_pass.hashing_password(request.form["password"])
         try:
             db.session.add(user)
             db.session.commit()
@@ -61,7 +61,8 @@ def signup():
             db.session.rollback()
         except Exception as e:
             db.session.rollback()
-            return redirect(url_for("signup"))      
+        flash("すでに登録されています．")
+        return redirect(url_for("signup"))      
     return render_template("signup.html")
 
 @app.route('/signin',methods=['POST', 'GET'])
@@ -74,12 +75,14 @@ def signin():
             email = request.form["email"]
             password = request.form["password"]
             if email == "" or password == "":
+                flash("入力してください．")
                 return redirect(url_for("signin"))
             users = db.session.query(User).filter(User.email == email).limit(1).all()
             for user in users:
                 if user != None:
                     hashed_password = user.password
-                if verify_password(hashed_password=hashed_password, password = request.form["password"]) == False:
+                if Hash_pass.verify_password(hashed_password=hashed_password, password = request.form["password"]) == False:
+                    flash("違います．")
                     return redirect(url_for("signin"))
                 session["user"] = email
                 return redirect(url_for("user"))
