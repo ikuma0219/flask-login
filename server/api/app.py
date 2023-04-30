@@ -1,8 +1,6 @@
 from flask import Flask,flash,request,render_template, redirect, url_for, session
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
-import pymysql
-from sqlalchemy import exc
 import hashlib
 
 db = SQLAlchemy()
@@ -55,10 +53,6 @@ def signup():
             db.session.add(user)
             db.session.commit()
             return redirect(url_for("signin"))
-        except pymysql.err.IntegrityError as e:
-            db.session.rollback()
-        except exc.IntegrityError as e:
-            db.session.rollback()
         except Exception as e:
             db.session.rollback()
         flash("すでに登録されています．")
@@ -81,23 +75,22 @@ def signin():
             for user in users:
                 if user != None:
                     hashed_password = user.password
-                if Hash_pass.verify_password(hashed_password=hashed_password, password = request.form["password"]) == False:
-                    flash("違います．")
-                    return redirect(url_for("signin"))
-                session["user"] = email
-                return redirect(url_for("user"))
+                    if Hash_pass.verify_password(hashed_password=hashed_password, password = request.form["password"]) == False:
+                        flash("パスワードが違います．")
+                        return redirect(url_for("signin"))
+                    session["user"] = email
+                    return redirect(url_for("user"))
+            flash("ユーザーが存在しません．") 
         return render_template("signin.html")
     
 @app.route("/user",methods=['POST', 'GET'])
 def user():
     if request.method == "POST":
         return redirect(url_for("logout"))
-    else:
-        if "user" in session:
-            user = session["user"]
-            return render_template("user.html", user = user)
-        else:
-            return redirect(url_for("signin"))
+    if "user" in session:
+        user = session["user"]
+        return render_template("user.html", user = user)
+    return redirect(url_for("signin"))
         
 
 @app.route("/logout")
