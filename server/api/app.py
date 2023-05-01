@@ -1,7 +1,14 @@
+import sys
+import pprint
+
+sys.path.append('C:\\Users\\ikuma\\OneDrive\\ドキュメント\\python_practice\\flask-login\\server\\models')
+sys.path.append('C:\\Users\\ikuma\\OneDrive\\ドキュメント\\python_practice\\flask-login\\server\\lib')
+pprint.pprint(sys.path)
 from flask import Flask,flash,request,render_template, redirect, url_for, session
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
-import hashlib
+from models import User
+from lib.auth import hashing_password, verify_password
 
 db = SQLAlchemy()
 app = Flask(__name__)
@@ -16,19 +23,8 @@ app.secret_key = "hello"
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 db.init_app(app)
-class User(db.Model):
-    __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(255), unique=True, nullable=False)
-    password = db.Column(db.String(255), unique=False, nullable=False)
 with app.app_context():
     db.create_all()
-
-class Hash_pass():
-    def hashing_password(password:str):
-        return hashlib.sha256(password.encode('utf-8')).hexdigest()
-    def verify_password(hashed_password:str, password:str):
-        return hashed_password == hashlib.sha256(password.encode('utf-8')).hexdigest()
 
 @app.route("/")
 def home():
@@ -48,7 +44,7 @@ def signup():
             return redirect(url_for("signup"))
         user = User()
         user.email = request.form["email"]
-        user.password = Hash_pass.hashing_password(request.form["password"])
+        user.password = hashing_password(request.form["password"])
         try:
             db.session.add(user)
             db.session.commit()
@@ -75,7 +71,7 @@ def signin():
             for user in users:
                 if user != None:
                     hashed_password = user.password
-                    if Hash_pass.verify_password(hashed_password=hashed_password, password = request.form["password"]) == False:
+                    if verify_password(hashed_password=hashed_password, password = request.form["password"]) == False:
                         flash("パスワードが違います．")
                         return redirect(url_for("signin"))
                     session["user"] = email

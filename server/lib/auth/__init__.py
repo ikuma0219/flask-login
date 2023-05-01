@@ -1,1 +1,1 @@
-from .auth import hashing_password
+from .auth import hashing_password, verify_password
