@@ -3,7 +3,6 @@ from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
 
-db = SQLAlchemy()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{user}:{password}@{host}/{db_name}?charset=utf8'.format(**{
     'user':"root",
@@ -12,6 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{user}:{password}@{host
     'db_name':"myDB"
     })
 app.config['SQLALCHEMY_TRACK_MODIFICAIONS'] = False
+db = SQLAlchemy(app)
 app.secret_key = "hello"
 app.permanent_session_lifetime = timedelta(minutes=5)
 

@@ -10,15 +10,15 @@
     </ul>
   {% endif %}
 {% endwith %}
-    <h1>サインインページ</h1>
-    <form action="signup" method="GET" >
-        <p><input type="submit" name ="btn1" value="新規登録"/></p>
+    <h1>新規登録ページ</h1>
+    <form action="signin" method="GET" >
+        <p><input type="submit" name ="btn1" value="サインイン"/></p>
     </form>
     <form action="#" method="POST" >
         <p>email:</p>
         <p><input type="text" name="email" /></p>
         <p>password:</p>
-        <p><input type="text" name="password" /></p>
-        <p><input type="submit" value="login" /></p>
+        <p><input type="password" name="password" /></p>
+        <p><input type="submit" value="登録" /></p>
     </form>
 {% endblock %}
