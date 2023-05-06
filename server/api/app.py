@@ -139,9 +139,6 @@ def signin():
 def otp():
     if "user" in session:
         return redirect(url_for("user"))
-    if "otp" in session:
-        user = session["otp"]
-        return render_template("otp.html", user=user)
     if request.method == "POST":
         get_otp = request.form["otp"]
         token_otp = session["otp"]
@@ -150,6 +147,9 @@ def otp():
             return redirect(url_for("otp"))
         session['user'] = token_otp
         return redirect(url_for('user'))
+    if "otp" in session:
+        user = session["otp"]
+        return render_template("otp.html", user=user)
     return redirect(url_for("signin"))
     
 @app.route("/user",methods=['POST', 'GET'])
