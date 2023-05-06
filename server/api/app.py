@@ -68,25 +68,28 @@ class Mail:
         msg['From'] =my_account
         return msg
 
-    def send_my_message(email):
-        otp = create_otp()
+    def send_my_message(email, otp):
         msg = Mail.make_mime(
             mail_to = email,
             subject='ワンタイムパスワード | ES3 Lab.',
             body='ワンタイムパスワードが発行されました．\n以下のワンタイムパスワードをブラウザに入力してください.\n\nワンタイムパスワード：{otp}\n\n神戸大学大学院工学研究科・工学部 情報通信研究室（ES3）'.format(otp=otp))
-        Mail.send_email(msg)
+        Mail.send_email(msg) 
 
 #router
 @app.route("/")
 def home():
     if "user" in session:
         return redirect(url_for("user"))
+    if "otp" in session:
+        return redirect(url_for("otp"))
     return redirect(url_for("signin"))
 
 @app.route('/signup',methods=['POST', 'GET'])
 def signup():
     if "user" in session:
         return redirect(url_for("user"))
+    if "otp" in session:
+        return redirect(url_for("otp"))
     if request.method == "POST": 
         email = request.form["email"]
         password = request.form["password"]
@@ -110,8 +113,9 @@ def signup():
 def signin():
     if "user" in session:
         return redirect(url_for("user"))
-    if request.method == "POST":
-        session.permanent =True      
+    if "otp" in session:
+        return redirect(url_for("otp"))
+    if request.method == "POST":     
         email = request.form["email"]
         password = request.form["password"]
         if email == "" or password == "":
@@ -124,25 +128,28 @@ def signin():
                 if verify_password(hashed_password=hashed_password, password = request.form["password"]) == False:
                     flash("パスワードが違います．")
                     return redirect(url_for("signin"))
-                Mail.send_my_message(email=email)
-                session["otp"] =email
+                otp = create_otp()
+                Mail.send_my_message(email=email, otp=otp)
+                session["otp"] = otp
                 return redirect(url_for("otp"))
         flash("ユーザーが存在しません．") 
     return render_template("signin.html")
     
 @app.route("/otp",methods=['POST', 'GET'])
 def otp():
+    if "user" in session:
+        return redirect(url_for("user"))
+    if "otp" in session:
+        user = session["otp"]
+        return render_template("otp.html", user=user)
     if request.method == "POST":
         get_otp = request.form["otp"]
-        token_otp = "otp"
+        token_otp = session["otp"]
         if check_otp(get_otp, token_otp) == False:
             flash('ワンタイムパスワードが違います．')
             return redirect(url_for("otp"))
         session['user'] = token_otp
         return redirect(url_for('user'))
-    if "otp" in session:
-        user = session["otp"]
-        return render_template("otp.html", user=user)
     return redirect(url_for("signin"))
     
 @app.route("/user",methods=['POST', 'GET'])
@@ -152,11 +159,12 @@ def user():
     if "user" in session:
         user = session["user"]
         return render_template("user.html", user = user)
-    return redirect(url_for("signin"))
+    return redirect(url_for("otp"))
 
 @app.route("/logout")
 def logout():
     session.pop("user", None)
+    session.pop("otp", None)
     return redirect(url_for("signin"))
 
 if __name__ == '__main__':
