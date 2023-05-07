@@ -7,18 +7,19 @@ services:
     container_name: app
     volumes:
       - ./app:/usr/src/app
+    command: flask run --host=0.0.0.0
     
-  
 
   mysql:
-    ports:
-      - 3307:3306
-    container_name: myDB
     image: mysql:8.0.33
-    environment:
+    container_name: database
+    environment:   
       MYSQL_ROOT_PASSWORD: Ikuma0219!
       MYSQL_DATABASE: myDB
       TZ: 'Asia/Tokyo'
     volumes:
       - ./docker/db/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 127.0.0.1:3307:3306
     
