@@ -5,10 +5,10 @@ from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
 import pyotp
-import time
-import datetime 
-import jwt
-from typing import Any,Dict
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+import qrcode
+import base64
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(minutes=5)
@@ -30,6 +30,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False)
+    qrcode = db.Column(db.String(800), unique=False, nullable=False)
 with app.app_context():
     db.create_all()
 
@@ -45,11 +46,6 @@ def create_otp():
     return totp.now()
 def check_otp(get_otp, token_otp):
     return get_otp == token_otp
-#token
-def encode(secretkey: str, payload: Dict[str,Any]):
-    return jwt.encode(payload=payload, key=secretkey, algorithm="HS256")
-def decode(secretkey: str, token: str):
-    return jwt.encode(jwt=token, key=secretkey, algorithm="HS256")
 
 #mail
 my_account = 'qr.otp.auth.es3@gmail.com'
@@ -67,6 +63,18 @@ class Mail:
         msg['To'] = mail_to
         msg['From'] =my_account
         return msg
+        
+    def make_qr_mime(mail_to, subject, body):
+        msg = MIMEMultipart()
+        msg['Subject'] = subject
+        msg['To'] = mail_to
+        msg['From'] =my_account
+        msg.attach(MIMEText(body, 'plain'))
+        with open("test.png", 'rb') as img:
+            attachment = MIMEImage(img.read())
+            attachment.add_header("Content-Disposion", "attachment", filename = 'test.png')
+        msg.attach(attachment)
+        return msg
 
     def send_my_message(email, otp):
         msg = Mail.make_mime(
@@ -74,6 +82,18 @@ class Mail:
             subject='ワンタイムパスワード | ES3 Lab.',
             body='ワンタイムパスワードが発行されました．\n以下のワンタイムパスワードをブラウザに入力してください.\n\nワンタイムパスワード：{otp}\n\n神戸大学大学院工学研究科・工学部 情報通信研究室（ES3）'.format(otp=otp))
         Mail.send_email(msg) 
+
+    def send_my_qrcode(email):
+        msg = Mail.make_qr_mime(
+            mail_to = email,
+            subject='QRコード | ES3 Lab.',
+            body='QRコードを添付しました．\nこのQRコードは安全に保存してください．\n\n神戸大学大学院工学研究科・工学部 情報通信研究室（ES3）')
+        Mail.send_email(msg) 
+
+img = qrcode.make(create_otp())
+img.save("test.png")
+file_data = open ("test.png", "rb").read()
+b64_data = base64.b64encode(file_data).decode('utf-8')
 
 #router
 @app.route("/")
@@ -99,9 +119,11 @@ def signup():
         user = User()
         user.email = request.form["email"]
         user.password = hashing_password(request.form["password"])
+        user.qrcode = b64_data
         try:
             db.session.add(user)
             db.session.commit()
+            Mail.send_my_qrcode(email=email)
             return redirect(url_for("signin"))
         except Exception as e:
             db.session.rollback()
