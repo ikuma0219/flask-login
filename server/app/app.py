@@ -90,10 +90,7 @@ class Mail:
             body='QRコードを添付しました．\nこのQRコードは安全に保存してください．\n\n神戸大学大学院工学研究科・工学部 情報通信研究室（ES3）')
         Mail.send_email(msg) 
 
-img = qrcode.make(create_otp())
-img.save("test.png")
-file_data = open ("test.png", "rb").read()
-b64_data = base64.b64encode(file_data).decode('utf-8')
+
 
 #router
 @app.route("/")
@@ -116,6 +113,10 @@ def signup():
         if email == "" or password == "":
             flash("入力してください．")
             return redirect(url_for("signup"))
+        img = qrcode.make(create_otp())
+        img.save("test.png")
+        file_data = open ("test.png", "rb").read()
+        b64_data = base64.b64encode(file_data).decode('utf-8')
         user = User()
         user.email = request.form["email"]
         user.password = hashing_password(request.form["password"])
