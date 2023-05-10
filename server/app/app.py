@@ -39,6 +39,12 @@ def hashing_password(password:str):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
 def verify_password(hashed_password:str, password:str):
     return hashed_password == hashlib.sha256(password.encode('utf-8')).hexdigest()
+def create_qr():
+    img = qrcode.make(create_otp())
+    img.save("test.png")
+    file_data = open ("test.png", "rb").read()
+    b64_data = base64.b64encode(file_data).decode('utf-8')
+    return b64_data
 
 #otp
 def create_otp():
@@ -113,14 +119,10 @@ def signup():
         if email == "" or password == "":
             flash("入力してください．")
             return redirect(url_for("signup"))
-        img = qrcode.make(create_otp())
-        img.save("test.png")
-        file_data = open ("test.png", "rb").read()
-        b64_data = base64.b64encode(file_data).decode('utf-8')
         user = User()
         user.email = request.form["email"]
         user.password = hashing_password(request.form["password"])
-        user.qrcode = b64_data
+        user.qrcode = create_qr()
         try:
             db.session.add(user)
             db.session.commit()
