@@ -34,11 +34,13 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
-#auth
+#hash
 def hashing_password(password:str):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
 def verify_password(hashed_password:str, password:str):
     return hashed_password == hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+#qrcode
 def create_qr():
     img = qrcode.make(create_otp())
     img.save("test.png")
