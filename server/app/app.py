@@ -78,9 +78,9 @@ class Mail:
         msg['To'] = mail_to
         msg['From'] =my_account
         msg.attach(MIMEText(body, 'plain'))
-        with open("test.png", 'rb') as img:
+        with open("test1.png", 'rb') as img:
             attachment = MIMEImage(img.read())
-            attachment.add_header("Content-Disposion", "attachment", filename = 'test.png')
+            attachment.add_header("Content-Disposion", "attachment", filename = 'test1.png')
         msg.attach(attachment)
         return msg
 
@@ -128,6 +128,8 @@ def signup():
         try:
             db.session.add(user)
             db.session.commit()
+            with open('test1.png', 'wb') as f:
+                f.write(base64.b64decode(user.qrcode))
             Mail.send_my_qrcode(email=email)
             return redirect(url_for("signin"))
         except Exception as e:
