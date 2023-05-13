@@ -22,10 +22,8 @@ def create_qr():
 
 
 class Greeter(qrcode_pb2_grpc.GreeterServicer):
-
-    def QrCode(self, request, context):
+    def QrCode():
         return qrcode_pb2.QrReply(message=create_qr())
-
 
 def serve():
     port = '50051'
@@ -35,7 +33,6 @@ def serve():
     server.start()
     print("Server started, listening on " + port)
     server.wait_for_termination()
-
 
 if __name__ == '__main__':
     logging.basicConfig()

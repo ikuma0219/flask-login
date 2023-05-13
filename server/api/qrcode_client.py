@@ -107,7 +107,6 @@ class Mail:
             body='QRコードを添付しました．\nこのQRコードは安全に保存してください．\n\n神戸大学大学院工学研究科・工学部 情報通信研究室（ES3）')
         Mail.send_email(msg) 
 
-
 #router
 @app.route("/")
 def home():
