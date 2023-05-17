@@ -5,7 +5,7 @@ import grpc
 import qrcode_pb2 as qrcode__pb2
 
 
-class GreeterStub(object):
+class QrgeneraterStub(object):
     """The greeting service definition.
     """
 
@@ -16,13 +16,13 @@ class GreeterStub(object):
             channel: A grpc.Channel.
         """
         self.QrCode = channel.unary_unary(
-                '/helloworld.Greeter/QrCode',
+                '/qrcode.Qrgenerater/QrCode',
                 request_serializer=qrcode__pb2.QrRequest.SerializeToString,
                 response_deserializer=qrcode__pb2.QrReply.FromString,
                 )
 
 
-class GreeterServicer(object):
+class QrgeneraterServicer(object):
     """The greeting service definition.
     """
 
@@ -34,7 +34,7 @@ class GreeterServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_GreeterServicer_to_server(servicer, server):
+def add_QrgeneraterServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'QrCode': grpc.unary_unary_rpc_method_handler(
                     servicer.QrCode,
@@ -43,12 +43,12 @@ def add_GreeterServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'helloworld.Greeter', rpc_method_handlers)
+            'qrcode.Qrgenerater', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class Greeter(object):
+class Qrgenerater(object):
     """The greeting service definition.
     """
 
@@ -63,7 +63,7 @@ class Greeter(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/helloworld.Greeter/QrCode',
+        return grpc.experimental.unary_unary(request, target, '/qrcode.Qrgenerater/QrCode',
             qrcode__pb2.QrRequest.SerializeToString,
             qrcode__pb2.QrReply.FromString,
             options, channel_credentials,

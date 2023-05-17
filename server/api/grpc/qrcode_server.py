@@ -21,14 +21,14 @@ def create_qr():
     return b64_data
 
 
-class Greeter(qrcode_pb2_grpc.GreeterServicer):
-    def QrCode():
+class Qrgenerater(qrcode_pb2_grpc.QrgeneraterServicer):
+    def QrCode(self, request, context):
         return qrcode_pb2.QrReply(message=create_qr())
 
 def serve():
     port = '50051'
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    qrcode_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
+    qrcode_pb2_grpc.add_QrgeneraterServicer_to_server(Qrgenerater(), server)
     server.add_insecure_port('[::]:' + port)
     server.start()
     print("Server started, listening on " + port)

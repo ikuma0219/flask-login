@@ -15,14 +15,14 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "io.grpc.examples.helloworld";
-option java_outer_classname = "HelloWorldProto";
-option objc_class_prefix = "HLW";
+option java_package = "io.grpc.examples.qrcode";
+option java_outer_classname = "QrCodeProto";
+option objc_class_prefix = "QRC";
 
-package helloworld;
+package qrcode;
 
 // The greeting service definition.
-service Greeter {
+service Qrgenerater {
   // Sends a greeting
   rpc QrCode (QrRequest) returns (QrReply) {}
 }

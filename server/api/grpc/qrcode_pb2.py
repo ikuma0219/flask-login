@@ -13,18 +13,18 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cqrcode.proto\x12\nhelloworld\"\x19\n\tQrRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1a\n\x07QrReply\x12\x0f\n\x07message\x18\x01 \x01(\t2A\n\x07Greeter\x12\x36\n\x06QrCode\x12\x15.helloworld.QrRequest\x1a\x13.helloworld.QrReply\"\x00\x42\x36\n\x1bio.grpc.examples.helloworldB\x0fHelloWorldProtoP\x01\xa2\x02\x03HLWb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cqrcode.proto\x12\x06qrcode\"\x19\n\tQrRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1a\n\x07QrReply\x12\x0f\n\x07message\x18\x01 \x01(\t2=\n\x0bQrgenerater\x12.\n\x06QrCode\x12\x11.qrcode.QrRequest\x1a\x0f.qrcode.QrReply\"\x00\x42.\n\x17io.grpc.examples.qrcodeB\x0bQrCodeProtoP\x01\xa2\x02\x03QRCb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'qrcode_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  DESCRIPTOR._serialized_options = b'\n\033io.grpc.examples.helloworldB\017HelloWorldProtoP\001\242\002\003HLW'
-  _QRREQUEST._serialized_start=28
-  _QRREQUEST._serialized_end=53
-  _QRREPLY._serialized_start=55
-  _QRREPLY._serialized_end=81
-  _GREETER._serialized_start=83
-  _GREETER._serialized_end=148
+  DESCRIPTOR._serialized_options = b'\n\027io.grpc.examples.qrcodeB\013QrCodeProtoP\001\242\002\003QRC'
+  _QRREQUEST._serialized_start=24
+  _QRREQUEST._serialized_end=49
+  _QRREPLY._serialized_start=51
+  _QRREPLY._serialized_end=77
+  _QRGENERATER._serialized_start=79
+  _QRGENERATER._serialized_end=140
 # @@protoc_insertion_point(module_scope)

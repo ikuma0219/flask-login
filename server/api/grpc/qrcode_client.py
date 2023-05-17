@@ -18,7 +18,7 @@ import qrcode_pb2_grpc
 
 def qr_client():
     with grpc.insecure_channel('localhost:50051') as channel:
-        stub = qrcode_pb2_grpc.GreeterStub(channel)
+        stub = qrcode_pb2_grpc.QrgeneraterStub(channel)
         response = stub.QrCode(qrcode_pb2.QrRequest())
     return response.message
 
