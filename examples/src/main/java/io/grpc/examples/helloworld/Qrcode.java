@@ -5,7 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Random;
-
+import java.util.Base64;
+import java.io.FileInputStream;
 import javax.imageio.ImageIO;
 
 import com.google.zxing.BarcodeFormat;
@@ -53,17 +54,17 @@ public class Qrcode
           catch (WriterException e) {
             e.printStackTrace();
         }
-        try {
-            BufferedImage img = ImageIO.read(new File("test.png"));
-            LuminanceSource src = new BufferedImageLuminanceSource(img);
-            Binarizer bin = new HybridBinarizer(src);
-            BinaryBitmap bm = new BinaryBitmap(bin);
 
-            QRCodeReader qrr = new QRCodeReader();
-            Result result = qrr.decode(bm);
-            String tdata = result.getText();
-            return tdata;
-        } catch (Exception e) {
+        String filePath = "test.png";
+        try {
+            File file = new File(filePath);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            byte[] imageData = new byte[(int) file.length()];
+            fileInputStream.read(imageData);
+            fileInputStream.close();
+            String encodedStr = Base64.getEncoder().encodeToString(imageData);
+            return encodedStr;
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

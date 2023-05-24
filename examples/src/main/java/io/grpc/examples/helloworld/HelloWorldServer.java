@@ -86,7 +86,7 @@ public class HelloWorldServer {
     public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
       Qrcode qrcode = new Qrcode();
       
-      HelloReply reply = HelloReply.newBuilder().setMessage(qrcode.publicMethod() + req.getName()).build();
+      HelloReply reply = HelloReply.newBuilder().setMessage(qrcode.publicMethod()).build();
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
     }
