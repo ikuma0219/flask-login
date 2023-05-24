@@ -84,7 +84,6 @@ def createStartScripts(String mainClassName) {
     }
 }
 
-createStartScripts('io.grpc.examples.helloworld.HelloWorldClient')
-createStartScripts('io.grpc.examples.helloworld.HelloWorldServer')
-createStartScripts('io.grpc.examples.helloworld.Qrcode')
+createStartScripts('io.grpc.examples.qrcode.QrcodeServer')
+createStartScripts('io.grpc.examples.qrcode.Qrcode')
 

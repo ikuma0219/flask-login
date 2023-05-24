@@ -72,7 +72,7 @@ set CLASSPATH=%APP_HOME%\lib\examples.jar;%APP_HOME%\lib\javase-3.3.0.jar;%APP_H
 
 
 @rem Execute qrcode
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %QRCODE_OPTS%  -classpath "%CLASSPATH%" io.grpc.examples.helloworld.Qrcode %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %QRCODE_OPTS%  -classpath "%CLASSPATH%" io.grpc.examples.qrcode.Qrcode %*
 
 :end
 @rem End local scope for the variables with windows NT shell
