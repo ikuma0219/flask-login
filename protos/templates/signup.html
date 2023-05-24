@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Login Page{% endblock %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+    <h1>新規作成</h1>
+    <form action="signin" method="GET" >
+        <p><input type="submit" name ="btn1" value="アカウントを持っている方"/></p>
+    </form>
+    <form action="#" method="POST" >
+        <p>email:</p>
+        <p><input type="text" name="email" /></p>
+        <p>password:</p>
+        <p><input type="password" name="password" /></p>
+        <p><input type="submit" value="作成" /></p>
+    </form>
+{% endblock %}
