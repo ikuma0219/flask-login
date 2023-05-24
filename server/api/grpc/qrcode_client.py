@@ -1,3 +1,4 @@
+from __future__ import print_function
 from flask import Flask,flash,request,render_template, redirect, url_for, session
 import smtplib,ssl
 from email.mime.text import MIMEText
@@ -7,8 +8,24 @@ import hashlib
 import pyotp
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
-import qrcode
 import base64
+
+import logging
+import grpc
+import qrcode_pb2
+import qrcode_pb2_grpc
+
+
+def qr_client():
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = qrcode_pb2_grpc.QrgeneraterStub(channel)
+        response = stub.QrCode(qrcode_pb2.QrRequest())
+    return response.message
+
+if __name__ == '__main__':
+    logging.basicConfig()
+    qr_client()
+
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(minutes=5)
@@ -34,17 +51,11 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
-#auth
+#hashdef
 def hashing_password(password:str):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
 def verify_password(hashed_password:str, password:str):
     return hashed_password == hashlib.sha256(password.encode('utf-8')).hexdigest()
-def create_qr():
-    img = qrcode.make(create_otp())
-    img.save("test.png")
-    file_data = open ("test.png", "rb").read()
-    b64_data = base64.b64encode(file_data).decode('utf-8')
-    return b64_data
 
 #otp
 def create_otp():
@@ -76,9 +87,9 @@ class Mail:
         msg['To'] = mail_to
         msg['From'] =my_account
         msg.attach(MIMEText(body, 'plain'))
-        with open("test.png", 'rb') as img:
+        with open("test1.png", 'rb') as img:
             attachment = MIMEImage(img.read())
-            attachment.add_header("Content-Disposion", "attachment", filename = 'test.png')
+            attachment.add_header("Content-Disposion", "attachment", filename = 'test1.png')
         msg.attach(attachment)
         return msg
 
@@ -95,8 +106,6 @@ class Mail:
             subject='QRコード | ES3 Lab.',
             body='QRコードを添付しました．\nこのQRコードは安全に保存してください．\n\n神戸大学大学院工学研究科・工学部 情報通信研究室（ES3）')
         Mail.send_email(msg) 
-
-
 
 #router
 @app.route("/")
@@ -122,10 +131,12 @@ def signup():
         user = User()
         user.email = request.form["email"]
         user.password = hashing_password(request.form["password"])
-        user.qrcode = create_qr()
+        user.qrcode = qr_client()
         try:
             db.session.add(user)
             db.session.commit()
+            with open('test1.png', 'wb') as f:
+                f.write(base64.b64decode(user.qrcode))
             Mail.send_my_qrcode(email=email)
             return redirect(url_for("signin"))
         except Exception as e:
