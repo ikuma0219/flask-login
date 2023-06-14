@@ -39,9 +39,23 @@ public class Main {
 
         Encoder encoder = new Encoder();
         encoder.create(Constants.PNG, "original");
-        for (int j = 0; j < keiretu.length; j++) {
-            System.out.print(keiretu[j] + " ");
+        
+        // for (int i = 0; i < jyouhou.length; i++) {
+        //     System.out.print(jyouhou[i] + " ");
+        // }
+        // System.out.println();
+        // for (int i = 0; i < code.length; i++) {
+        //     System.out.print(code[i] + " ");
+        // }
+        // System.out.println();
+        for (int i = 0; i < keiretu.length; i++) {
+            System.out.print(keiretu[i] + " ");
         }
+        // System.out.println();
+        // for (int i = 0; i < kyoutu.length; i++) {
+        //     System.out.print(kyoutu[i] + " ");
+        // }
+
         return keiretu;
     }
 
@@ -58,8 +72,8 @@ public class Main {
         Encoder encoder = new Encoder();
         encoder.create(Constants.PNG, "errorLocation");
 
-        for (int j = 0; j < onetime.length; j++) {
-            System.out.print(onetime[j] + " ");
+        for (int i = 0; i < onetime.length; i++) {
+            System.out.print(onetime[i] + " ");
         }
         return onetime;
     }

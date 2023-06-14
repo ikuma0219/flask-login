@@ -725,7 +725,7 @@ public final class Encoder {
     // int maskPattern = chooseMaskPattern(finalBits, ecLevel, version, matrix);
     // int maskPattern = chooseMaskByBlank(finalBits, ecLevel, version, matrix);
     int maskPattern = maskpattern;
-    System.out.println("mask = " + maskPattern);
+    // System.out.println("mask = " + maskPattern);
     ;
     // maskpattern = chooseMaskByBlank(finalBits, ecLevel, version, matrix);
     qrCodea.setMaskPattern(maskPattern);
@@ -736,8 +736,8 @@ public final class Encoder {
     ByteMatrix matrixb = new ByteMatrix(dimension, dimension);
     MatrixUtil.buildMatrixWithoutDate(ecLevel, version, maskPattern, matrixb);
     // byte[][] test = matrix.getArray();
-    System.out.println();
-    System.out.println("bitarray（マスクパターン付加済み1）");
+    // System.out.println();
+    // System.out.println("bitarray（マスクパターン付加済み1）");
     // for(int i=0;i<test.length;i++) {
     // for(int j=0;j<test[0].length;j++) {
     // System.out.print(test[i][j]+" ");

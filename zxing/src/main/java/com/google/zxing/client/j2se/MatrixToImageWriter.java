@@ -69,9 +69,9 @@ public final class MatrixToImageWriter {
     int height = matrix.getHeight();
     BufferedImage image = new BufferedImage(width, height, config.getBufferedImageColorModel());
     int onColor = config.getPixelOnColor();// 黒の画素値？
-    System.out.println("onColor:" + onColor);
+    // System.out.println("onColor:" + onColor);
     int offColor = config.getPixelOffColor();// 白の画素値？
-    System.out.println("offColor:" + offColor);
+    // System.out.println("offColor:" + offColor);
     int[] rowPixels = new int[width];// ピクセル列の画素値を格納する配列？
     BitArray row = new BitArray(width);
     for (int y = 0; y < height; y++) {
@@ -92,9 +92,9 @@ public final class MatrixToImageWriter {
     int onColor = config.getPixelOnColor();// 黒の画素値？
     int offColor = config.getPixelOffColor();// 白の画素値？
     int errorColor = config.getPixelErrorColor();
-    System.out.println("onColor:" + onColor);
-    System.out.println("offColor:" + offColor);
-    System.out.println("errorColor:" + errorColor);
+    // System.out.println("onColor:" + onColor);
+    // System.out.println("offColor:" + offColor);
+    // System.out.println("errorColor:" + errorColor);
     int[] rowPixels = new int[width];// ピクセル列の画素値を格納する配列？
     BitArray row = new BitArray(width);
     // int[] rowPixelsb = new int[width];//ピクセル列の画素値を格納する配列？

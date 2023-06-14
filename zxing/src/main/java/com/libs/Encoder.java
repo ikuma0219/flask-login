@@ -19,6 +19,7 @@ public class Encoder {
             fileInputStream.read(imageData);
             fileInputStream.close();
             String encodedStr = Base64.getEncoder().encodeToString(imageData);
+            // System.out.println(encodedStr);
             // delete(fileName);
             return encodedStr;
         } catch (IOException e) {
