@@ -1,0 +1,16 @@
+com\google\zxing\common\BitArray.class
+com\google\zxing\client\j2se\MatrixToImageConfig.class
+com\Main.class
+com\google\zxing\qrcode\encoder\MatrixUtil.class
+com\google\zxing\qrcode\encoder\Encoder$1.class
+com\google\zxing\qrcode\encoder\Encoder.class
+com\google\zxing\Writer.class
+com\google\zxing\qrcode\QRCodeWriter.class
+com\google\zxing\qrcode\encoder\MaskUtil.class
+com\rs\GF.class
+com\rs\RS.class
+com\google\zxing\client\j2se\MatrixToImageWriter.class
+com\rs\GFpoly.class
+com\domain\Constants.class
+com\libs\Library.class
+com\libs\Encoder.class
