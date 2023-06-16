@@ -25,6 +25,7 @@ import io.grpc.examples.qrcode.QrRequest;
 import io.grpc.examples.qrcode.Qrcode;
 import io.grpc.stub.StreamObserver;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -95,7 +96,12 @@ public class QrcodeServer {
     }
     @Override
     public void getkeiretu(QrRequest req, StreamObserver<QrReply> responseObserver) {
-      QrReply reply = QrReply.newBuilder().setMessage("Hello again ").build();
+      int[] keiretu = new int[26];
+      String[] strkeiretu = new String[keiretu.length];
+      for (int i = 0; i < keiretu.length; i++) {
+            strkeiretu[i] = String.valueOf(keiretu[i]);
+        }
+      QrReply reply = QrReply.newBuilder().setMessage(Arrays.toString(strkeiretu)).build();
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
     }
