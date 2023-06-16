@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cqrcode.proto\x12\x06qrcode\"\x19\n\tQrRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1a\n\x07QrReply\x12\x0f\n\x07message\x18\x01 \x01(\t2@\n\tGenerator\x12\x33\n\x0bQrGenerator\x12\x11.qrcode.QrRequest\x1a\x0f.qrcode.QrReply\"\x00\x42.\n\x17io.grpc.examples.qrcodeB\x0bQrcodeProtoP\x01\xa2\x02\x03QRCb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cqrcode.proto\x12\x06qrcode\"\x19\n\tQrRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1a\n\x07QrReply\x12\x0f\n\x07message\x18\x01 \x01(\t2t\n\tGenerator\x12\x33\n\x0bQrGenerator\x12\x11.qrcode.QrRequest\x1a\x0f.qrcode.QrReply\"\x00\x12\x32\n\nGetkeiretu\x12\x11.qrcode.QrRequest\x1a\x0f.qrcode.QrReply\"\x00\x42.\n\x17io.grpc.examples.qrcodeB\x0bQrcodeProtoP\x01\xa2\x02\x03QRCb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'qrcode_pb2', globals())
@@ -26,5 +26,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _QRREPLY._serialized_start=51
   _QRREPLY._serialized_end=77
   _GENERATOR._serialized_start=79
-  _GENERATOR._serialized_end=143
+  _GENERATOR._serialized_end=195
 # @@protoc_insertion_point(module_scope)

@@ -93,5 +93,11 @@ public class QrcodeServer {
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
     }
+    @Override
+    public void getkeiretu(QrRequest req, StreamObserver<QrReply> responseObserver) {
+      QrReply reply = QrReply.newBuilder().setMessage("Hello again ").build();
+      responseObserver.onNext(reply);
+      responseObserver.onCompleted();
+    }
   }
 }

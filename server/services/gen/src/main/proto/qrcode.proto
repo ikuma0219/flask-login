@@ -24,6 +24,7 @@ package qrcode;
 service Generator {
   // Sends a greeting
   rpc QrGenerator (QrRequest) returns (QrReply) {}
+  rpc Getkeiretu (QrRequest) returns (QrReply) {}
 }
 
 // The request message containing the user's name.

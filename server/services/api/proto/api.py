@@ -24,6 +24,7 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 import base64
 from qrcode_client import run
+from qrcode_client import run1
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(minutes=5)
@@ -46,6 +47,7 @@ class User(db.Model):
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False)
     qrcode = db.Column(db.String(800), unique=False, nullable=False)
+    # keiretu = db.Column(db.String(255), unique=True, nullable=False)
 with app.app_context():
     db.create_all()
 
@@ -64,7 +66,7 @@ def check_otp(get_otp, token_otp):
 
 #mail
 my_account = 'qr.otp.auth.es3@gmail.com'
-my_password = 'hihgevczbsbhqjmw'
+my_password = 'oxabqbwtjbfxxszq'
 class Mail:
     def send_email(msg):
         server = smtplib.SMTP_SSL('smtp.gmail.com', 465, context=ssl.create_default_context())
@@ -130,6 +132,7 @@ def signup():
         user.email = request.form["email"]
         user.password = hashing_password(request.form["password"])
         user.qrcode = run()
+        print (run1())
         try:
             db.session.add(user)
             db.session.commit()

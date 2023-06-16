@@ -29,6 +29,11 @@ def run():
         response = stub.QrGenerator(qrcode_pb2.QrRequest())
     return response.message
 
-if __name__ == '__main__':
-    logging.basicConfig()
-    run()
+def run1():
+    # NOTE(gRPC Python Team): .close() is possible on a channel and should be
+    # used in circumstances in which the with statement does not fit the needs
+    # of the code.
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = qrcode_pb2_grpc.GeneratorStub(channel)
+        response = stub.Getkeiretu(qrcode_pb2.QrRequest())
+    return response.message
