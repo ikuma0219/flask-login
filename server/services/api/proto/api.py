@@ -25,6 +25,7 @@ from email.mime.multipart import MIMEMultipart
 import base64
 from qrcode_client import run
 from qrcode_client import run1
+from qrcode_client import run2
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(minutes=5)
@@ -162,6 +163,8 @@ def signin():
         for user in users:
             if user != None:
                 hashed_password = user.password
+                name = user.keiretu
+                run2(name)
                 if verify_password(hashed_password=hashed_password, password = request.form["password"]) == False:
                     flash("パスワードが違います．")
                     return redirect(url_for("signin"))

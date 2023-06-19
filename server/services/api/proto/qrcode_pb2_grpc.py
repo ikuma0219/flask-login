@@ -25,6 +25,11 @@ class GeneratorStub(object):
                 request_serializer=qrcode__pb2.QrRequest.SerializeToString,
                 response_deserializer=qrcode__pb2.QrReply.FromString,
                 )
+        self.Getotp = channel.unary_unary(
+                '/qrcode.Generator/Getotp',
+                request_serializer=qrcode__pb2.QrRequest.SerializeToString,
+                response_deserializer=qrcode__pb2.QrReply.FromString,
+                )
 
 
 class GeneratorServicer(object):
@@ -44,6 +49,12 @@ class GeneratorServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Getotp(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_GeneratorServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -54,6 +65,11 @@ def add_GeneratorServicer_to_server(servicer, server):
             ),
             'Getkeiretu': grpc.unary_unary_rpc_method_handler(
                     servicer.Getkeiretu,
+                    request_deserializer=qrcode__pb2.QrRequest.FromString,
+                    response_serializer=qrcode__pb2.QrReply.SerializeToString,
+            ),
+            'Getotp': grpc.unary_unary_rpc_method_handler(
+                    servicer.Getotp,
                     request_deserializer=qrcode__pb2.QrRequest.FromString,
                     response_serializer=qrcode__pb2.QrReply.SerializeToString,
             ),
@@ -97,6 +113,23 @@ class Generator(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/qrcode.Generator/Getkeiretu',
+            qrcode__pb2.QrRequest.SerializeToString,
+            qrcode__pb2.QrReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Getotp(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/qrcode.Generator/Getotp',
             qrcode__pb2.QrRequest.SerializeToString,
             qrcode__pb2.QrReply.FromString,
             options, channel_credentials,

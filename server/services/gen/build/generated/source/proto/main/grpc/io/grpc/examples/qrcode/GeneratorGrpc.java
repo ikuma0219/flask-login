@@ -80,6 +80,37 @@ public final class GeneratorGrpc {
     return getGetkeiretuMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<io.grpc.examples.qrcode.QrRequest,
+      io.grpc.examples.qrcode.QrReply> getGetotpMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "Getotp",
+      requestType = io.grpc.examples.qrcode.QrRequest.class,
+      responseType = io.grpc.examples.qrcode.QrReply.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<io.grpc.examples.qrcode.QrRequest,
+      io.grpc.examples.qrcode.QrReply> getGetotpMethod() {
+    io.grpc.MethodDescriptor<io.grpc.examples.qrcode.QrRequest, io.grpc.examples.qrcode.QrReply> getGetotpMethod;
+    if ((getGetotpMethod = GeneratorGrpc.getGetotpMethod) == null) {
+      synchronized (GeneratorGrpc.class) {
+        if ((getGetotpMethod = GeneratorGrpc.getGetotpMethod) == null) {
+          GeneratorGrpc.getGetotpMethod = getGetotpMethod =
+              io.grpc.MethodDescriptor.<io.grpc.examples.qrcode.QrRequest, io.grpc.examples.qrcode.QrReply>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "Getotp"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.examples.qrcode.QrRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.examples.qrcode.QrReply.getDefaultInstance()))
+              .setSchemaDescriptor(new GeneratorMethodDescriptorSupplier("Getotp"))
+              .build();
+        }
+      }
+    }
+    return getGetotpMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -147,6 +178,13 @@ public final class GeneratorGrpc {
         io.grpc.stub.StreamObserver<io.grpc.examples.qrcode.QrReply> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetkeiretuMethod(), responseObserver);
     }
+
+    /**
+     */
+    default void getotp(io.grpc.examples.qrcode.QrRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.examples.qrcode.QrReply> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetotpMethod(), responseObserver);
+    }
   }
 
   /**
@@ -200,6 +238,14 @@ public final class GeneratorGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetkeiretuMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void getotp(io.grpc.examples.qrcode.QrRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.examples.qrcode.QrReply> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetotpMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -236,6 +282,13 @@ public final class GeneratorGrpc {
     public io.grpc.examples.qrcode.QrReply getkeiretu(io.grpc.examples.qrcode.QrRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetkeiretuMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public io.grpc.examples.qrcode.QrReply getotp(io.grpc.examples.qrcode.QrRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetotpMethod(), getCallOptions(), request);
     }
   }
 
@@ -276,10 +329,19 @@ public final class GeneratorGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetkeiretuMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<io.grpc.examples.qrcode.QrReply> getotp(
+        io.grpc.examples.qrcode.QrRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetotpMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_QR_GENERATOR = 0;
   private static final int METHODID_GETKEIRETU = 1;
+  private static final int METHODID_GETOTP = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -304,6 +366,10 @@ public final class GeneratorGrpc {
           break;
         case METHODID_GETKEIRETU:
           serviceImpl.getkeiretu((io.grpc.examples.qrcode.QrRequest) request,
+              (io.grpc.stub.StreamObserver<io.grpc.examples.qrcode.QrReply>) responseObserver);
+          break;
+        case METHODID_GETOTP:
+          serviceImpl.getotp((io.grpc.examples.qrcode.QrRequest) request,
               (io.grpc.stub.StreamObserver<io.grpc.examples.qrcode.QrReply>) responseObserver);
           break;
         default:
@@ -338,6 +404,13 @@ public final class GeneratorGrpc {
               io.grpc.examples.qrcode.QrRequest,
               io.grpc.examples.qrcode.QrReply>(
                 service, METHODID_GETKEIRETU)))
+        .addMethod(
+          getGetotpMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              io.grpc.examples.qrcode.QrRequest,
+              io.grpc.examples.qrcode.QrReply>(
+                service, METHODID_GETOTP)))
         .build();
   }
 
@@ -388,6 +461,7 @@ public final class GeneratorGrpc {
               .setSchemaDescriptor(new GeneratorFileDescriptorSupplier())
               .addMethod(getQrGeneratorMethod())
               .addMethod(getGetkeiretuMethod())
+              .addMethod(getGetotpMethod())
               .build();
         }
       }

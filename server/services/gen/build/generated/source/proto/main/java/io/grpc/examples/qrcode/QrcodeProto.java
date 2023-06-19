@@ -34,12 +34,13 @@ public final class QrcodeProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\014qrcode.proto\022\006qrcode\"\031\n\tQrRequest\022\014\n\004n" +
-      "ame\030\001 \001(\t\"\032\n\007QrReply\022\017\n\007message\030\001 \001(\t2t\n" +
-      "\tGenerator\0223\n\013QrGenerator\022\021.qrcode.QrReq" +
-      "uest\032\017.qrcode.QrReply\"\000\0222\n\nGetkeiretu\022\021." +
-      "qrcode.QrRequest\032\017.qrcode.QrReply\"\000B.\n\027i" +
-      "o.grpc.examples.qrcodeB\013QrcodeProtoP\001\242\002\003" +
-      "QRCb\006proto3"
+      "ame\030\001 \001(\t\"\032\n\007QrReply\022\017\n\007message\030\001 \001(\t2\244\001" +
+      "\n\tGenerator\0223\n\013QrGenerator\022\021.qrcode.QrRe" +
+      "quest\032\017.qrcode.QrReply\"\000\0222\n\nGetkeiretu\022\021" +
+      ".qrcode.QrRequest\032\017.qrcode.QrReply\"\000\022.\n\006" +
+      "Getotp\022\021.qrcode.QrRequest\032\017.qrcode.QrRep" +
+      "ly\"\000B.\n\027io.grpc.examples.qrcodeB\013QrcodeP" +
+      "rotoP\001\242\002\003QRCb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

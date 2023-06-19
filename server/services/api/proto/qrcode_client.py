@@ -37,3 +37,12 @@ def run1():
         stub = qrcode_pb2_grpc.GeneratorStub(channel)
         response = stub.Getkeiretu(qrcode_pb2.QrRequest())
     return response.message
+
+def run2(name):
+    # NOTE(gRPC Python Team): .close() is possible on a channel and should be
+    # used in circumstances in which the with statement does not fit the needs
+    # of the code.
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = qrcode_pb2_grpc.GeneratorStub(channel)
+        response = stub.Getotp(qrcode_pb2.QrRequest(name=name))
+    return response.message

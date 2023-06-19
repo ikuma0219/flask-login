@@ -48,7 +48,8 @@ public class QrcodeServer {
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override
       public void run() {
-        // Use stderr here since the logger may have been reset by its JVM shutdown hook.
+        // Use stderr here since the logger may have been reset by its JVM shutdown
+        // hook.
         System.err.println("*** shutting down gRPC server since JVM is shutting down");
         try {
           QrcodeServer.this.stop();
@@ -67,7 +68,8 @@ public class QrcodeServer {
   }
 
   /**
-   * Await termination on the main thread since the grpc library uses daemon threads.
+   * Await termination on the main thread since the grpc library uses daemon
+   * threads.
    */
   private void blockUntilShutdown() throws InterruptedException {
     if (server != null) {
@@ -89,19 +91,25 @@ public class QrcodeServer {
     @Override
     public void qrGenerator(QrRequest req, StreamObserver<QrReply> responseObserver) {
       Qrcode qrcode = new Qrcode();
-      
-      QrReply reply = QrReply.newBuilder().setMessage(qrcode.publicMethod()).build();
+      QrReply reply = QrReply.newBuilder().setMessage(qrcode.createoriginal()).build();
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
     }
-    @Override
+
     public void getkeiretu(QrRequest req, StreamObserver<QrReply> responseObserver) {
       int[] keiretu = new int[26];
       String[] strkeiretu = new String[keiretu.length];
       for (int i = 0; i < keiretu.length; i++) {
-            strkeiretu[i] = String.valueOf(keiretu[i]);
-        }
+        strkeiretu[i] = String.valueOf(keiretu[i]);
+      }
       QrReply reply = QrReply.newBuilder().setMessage(Arrays.toString(strkeiretu)).build();
+      responseObserver.onNext(reply);
+      responseObserver.onCompleted();
+    }
+
+    public void getotp(QrRequest req, StreamObserver<QrReply> responseObserver) {
+      Qrcode qrcode = new Qrcode();
+      QrReply reply = QrReply.newBuilder().setMessage(qrcode.createerror(req.getName())).build();
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
     }
