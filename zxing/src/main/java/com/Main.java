@@ -39,13 +39,13 @@ public class Main {
 
         Encoder encoder = new Encoder();
         encoder.create(Constants.PNG, "original");
-        
+
         // for (int i = 0; i < jyouhou.length; i++) {
-        //     System.out.print(jyouhou[i] + " ");
+        // System.out.print(jyouhou[i] + " ");
         // }
         // System.out.println();
         // for (int i = 0; i < code.length; i++) {
-        //     System.out.print(code[i] + " ");
+        // System.out.print(code[i] + " ");
         // }
         // System.out.println();
         for (int i = 0; i < keiretu.length; i++) {
@@ -53,21 +53,16 @@ public class Main {
         }
         // System.out.println();
         // for (int i = 0; i < kyoutu.length; i++) {
-        //     System.out.print(kyoutu[i] + " ");
+        // System.out.print(kyoutu[i] + " ");
         // }
 
         return keiretu;
     }
 
     public static int[] onetime() throws WriterException, IOException {
-        GF gf = new GF(0x011D, 256, 0);
-        RS rs = new RS(gf);
-        int[] jyouhou = rs.randomR(19);
-        int[] code = rs.encode(jyouhou, 8);
-        int[] keiretu = rs.randomTR(code, 4);
 
         Library library = new Library();
-        int[] onetime = library.calcurateOnetime(keiretu);
+        int[] onetime = library.calcurateOnetime(original());
 
         Encoder encoder = new Encoder();
         encoder.create(Constants.PNG, "errorLocation");
