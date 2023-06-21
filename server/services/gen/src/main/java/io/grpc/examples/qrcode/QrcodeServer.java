@@ -93,10 +93,10 @@ public class QrcodeServer {
     }
 
     public void getkeiretu(QrRequest req, StreamObserver<QrReply> responseObserver) {
-      int[] keiretu = new int[26];
-      String[] strkeiretu = new String[keiretu.length];
-      for (int i = 0; i < keiretu.length; i++) {
-        strkeiretu[i] = String.valueOf(keiretu[i]);
+      int[] a = Keiretu.original();
+      String[] strkeiretu = new String[a.length];
+      for (int i = 0; i < a.length; i++) {
+        strkeiretu[i] = String.valueOf(a[i]);
       }
       QrReply reply = QrReply.newBuilder().setMessage(Arrays.toString(strkeiretu)).build();
       responseObserver.onNext(reply);
